@@ -1,0 +1,10 @@
+{
+  "name": "uni-semester6-practice-case4",
+  "version": "0.1.0",
+  "devDependencies": {
+    "@types/node": "^25.0.3",
+    "dotenv": "^17.2.3",
+    "prisma": "^7.2.0",
+    "typescript": "^5.9.3"
+  }
+}

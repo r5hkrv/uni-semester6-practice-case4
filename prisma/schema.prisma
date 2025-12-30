@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Book {
+  id Int @default(autoincrement()) @id
+  cover_image_url String
+  title String
+  author String
+  year Int
+  category String
+}
+
+model Cart {
+  id Int @default(autoincrement()) @id
+  items CartItem[]
+  total_price Int
+}
+
+model CartItem {
+  id Int @default(autoincrement()) @id
+  quantity Int
+  payment_type PaymentType
+  rent Rent?
+  product Product @relation(fields: [product_id], references: [id])
+  product_id Int
+  cart Cart @relation(fields: [cart_id], references: [id])
+  cart_id Int
+}
+
+enum PaymentType {
+  FIXED
+  RECURRING
+}
+
+model Rent {
+  id Int @default(autoincrement()) @id
+  price Int
+  period DateTime
+  start_date DateTime
+  end_date DateTime
+  cart_item CartItem @relation(fields: [cart_item_id], references: [id])
+  cart_item_id Int @unique
+}
+
+model Product {
+  id Int @default(autoincrement()) @id
+  preview_image_url String
+  name String
+  price Int
+  left_in_stock Int
+  cart_items CartItem[]
+}
