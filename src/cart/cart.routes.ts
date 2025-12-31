@@ -19,10 +19,16 @@ const cartRoutes: FastifyPluginAsync = async (fastify) => {
 		method: "PUT",
 		url: "/clear/:id",
 		schema: clearCartSchema,
-		handler: async (request) => {
+		handler: async (request, reply) => {
 			const { id } = request.params;
 
-			return await fastify.cartService.clear(id);
+			try {
+				const cart = await fastify.cartService.clear(id);
+
+				reply.status(200).send(cart);
+			} catch (error) {
+				reply.status(404);
+			}
 		},
 	});
 
