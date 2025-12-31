@@ -1,3 +1,11 @@
+const paramsSchema = {
+	type: "object",
+	properties: {
+		id: { type: "number" },
+	},
+	required: ["id"],
+};
+
 const bookSchema = {
 	type: "object",
 	properties: {
@@ -8,12 +16,6 @@ const bookSchema = {
 		year: { type: "number" },
 		category: { type: "string" },
 	},
-};
-
-const paramsSchema = {
-	type: "object",
-	properties: { id: { type: "number" } },
-	required: ["id"],
 };
 
 export const getAllBooksSchema = {
@@ -61,8 +63,14 @@ export const updateBookSchema = {
 			category: { type: "string" },
 		},
 	},
+	response: {
+		200: bookSchema,
+	},
 };
 
 export const deleteBookSchema = {
 	params: paramsSchema,
+	response: {
+		200: bookSchema,
+	},
 };

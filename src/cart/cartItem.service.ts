@@ -19,9 +19,7 @@ const cartItemService = fp(async (fastify) => {
 			return fastify.prisma.cartItem.findMany();
 		},
 		getOne: async (id) => {
-			return await fastify.prisma.cartItem.findUnique({
-				where: { id },
-			});
+			return await fastify.prisma.cartItem.findUnique({ where: { id } });
 		},
 		create: async (data) => {
 			return await fastify.prisma.cartItem.create({ data });
@@ -33,9 +31,7 @@ const cartItemService = fp(async (fastify) => {
 			});
 		},
 		delete: async (id) => {
-			return await fastify.prisma.cartItem.delete({
-				where: { id },
-			});
+			return await fastify.prisma.cartItem.delete({ where: { id } });
 		},
 	});
 });

@@ -33,7 +33,7 @@ const cartItemRoutes: FastifyPluginAsync = async (fastify) => {
 			const item = await fastify.cartItemService.getOne(id);
 
 			if (item !== null) {
-				reply.send(item);
+				reply.status(200).send(item);
 			} else {
 				reply.status(404);
 			}
@@ -46,14 +46,9 @@ const cartItemRoutes: FastifyPluginAsync = async (fastify) => {
 		schema: createCartItemSchema,
 		handler: async (request, reply) => {
 			const { body } = request;
+			const item = await fastify.cartItemService.create(body);
 
-			try {
-				const item = await fastify.cartItemService.create(body);
-
-				reply.status(201).send(item);
-			} catch (error) {
-				reply.status(404);
-			}
+			reply.status(201).send(item);
 		},
 	});
 
@@ -68,7 +63,7 @@ const cartItemRoutes: FastifyPluginAsync = async (fastify) => {
 			try {
 				const item = await fastify.cartItemService.update(id, body);
 
-				reply.send(item);
+				reply.status(200).send(item);
 			} catch (error) {
 				reply.status(404);
 			}
@@ -83,7 +78,9 @@ const cartItemRoutes: FastifyPluginAsync = async (fastify) => {
 			const { id } = request.params;
 
 			try {
-				await fastify.cartItemService.delete(id);
+				const item = await fastify.cartItemService.delete(id);
+
+				reply.status(200).send(item);
 			} catch (error) {
 				reply.status(404);
 			}

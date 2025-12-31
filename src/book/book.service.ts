@@ -1,33 +1,33 @@
 import fp from "fastify-plugin";
-import type { Book, Prisma } from "../generated/prisma/client.js";
+import type { Book } from "../generated/prisma/client.js";
+import type {
+	BookCreateInput,
+	BookUpdateInput,
+} from "../generated/prisma/models.js";
 
 interface BookService {
 	getAll(): Promise<Book[]>;
 	getOne(id: number): Promise<Book | null>;
-	create(data: Prisma.BookCreateInput): Promise<Book>;
-	update(id: number, data: Prisma.BookCreateInput): Promise<Book>;
+	create(data: BookCreateInput): Promise<Book>;
+	update(id: number, data: BookUpdateInput): Promise<Book>;
 	delete(id: number): Promise<Book>;
 }
 
 const bookService = fp(async (fastify) => {
 	fastify.decorate<BookService>("bookService", {
-		async getAll() {
+		getAll: async () => {
 			return fastify.prisma.book.findMany();
 		},
-
-		async getOne(id) {
+		getOne: async (id) => {
 			return fastify.prisma.book.findUnique({ where: { id } });
 		},
-
-		async create(data) {
+		create: async (data) => {
 			return fastify.prisma.book.create({ data });
 		},
-
-		async update(id, data) {
+		update: async (id, data) => {
 			return fastify.prisma.book.update({ where: { id }, data });
 		},
-
-		async delete(id) {
+		delete: async (id) => {
 			return fastify.prisma.book.delete({ where: { id } });
 		},
 	});

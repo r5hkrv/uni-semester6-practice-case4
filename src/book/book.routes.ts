@@ -1,5 +1,8 @@
-import type { FastifyInstance } from "fastify";
-import type { Prisma } from "../generated/prisma/client.js";
+import type { FastifyPluginAsync } from "fastify";
+import type {
+	BookCreateInput,
+	BookUpdateInput,
+} from "../generated/prisma/models.js";
 import bookService from "./book.service.js";
 import {
 	getAllBooksSchema,
@@ -9,7 +12,7 @@ import {
 	deleteBookSchema,
 } from "./book.schema.js";
 
-const bookRoutes = (fastify: FastifyInstance) => {
+const bookRoutes: FastifyPluginAsync = async (fastify) => {
 	fastify.register(bookService);
 
 	fastify.route({
@@ -26,37 +29,41 @@ const bookRoutes = (fastify: FastifyInstance) => {
 		url: "/:id",
 		schema: getOneBookSchema,
 		handler: async (request, reply) => {
-			const book = await fastify.bookService.getOne(request.params.id);
+			const { id } = request.params;
+			const book = await fastify.bookService.getOne(id);
 
 			if (book !== null) {
 				reply.status(200).send(book);
+			} else {
+				reply.status(404);
 			}
-			reply.status(404);
 		},
 	});
 
-	fastify.route<{ Body: Prisma.BookCreateInput }>({
+	fastify.route<{ Body: BookCreateInput }>({
 		method: "POST",
 		url: "/",
 		schema: createBookSchema,
 		handler: async (request, reply) => {
-			const book = await fastify.bookService.create(request.body);
+			const { body } = request;
+			const book = await fastify.bookService.create(body);
 
 			reply.status(201).send(book);
 		},
 	});
 
-	fastify.route<{ Params: { id: number }; Body: Prisma.BookCreateInput }>({
+	fastify.route<{ Params: { id: number }; Body: BookUpdateInput }>({
 		method: "PUT",
 		url: "/:id",
 		schema: updateBookSchema,
 		handler: async (request, reply) => {
-			const { params, body } = request;
+			const { id } = request.params;
+			const { body } = request;
 
 			try {
-				await fastify.bookService.update(params.id, body);
+				const book = await fastify.bookService.update(id, body);
 
-				reply.status(200);
+				reply.status(200).send(book);
 			} catch (error) {
 				reply.status(404);
 			}
@@ -68,10 +75,12 @@ const bookRoutes = (fastify: FastifyInstance) => {
 		url: "/:id",
 		schema: deleteBookSchema,
 		handler: async (request, reply) => {
-			try {
-				await fastify.bookService.delete(request.params.id);
+			const { id } = request.params;
 
-				reply.status(200);
+			try {
+				const book = await fastify.bookService.delete(id);
+
+				reply.status(200).send(book);
 			} catch (error) {
 				reply.status(404);
 			}

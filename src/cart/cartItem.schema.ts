@@ -6,7 +6,7 @@ const paramsSchema = {
 	required: ["id"],
 };
 
-export const cartItemSchema = {
+const cartItemSchema = {
 	type: "object",
 	properties: {
 		id: { type: "number" },
