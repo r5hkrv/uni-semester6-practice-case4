@@ -1,8 +1,8 @@
 import fp from "fastify-plugin";
-import { type CartItem } from "../generated/prisma/client.js";
-import {
-	type CartItemCreateInput,
-	type CartItemUpdateInput,
+import type { CartItem } from "../generated/prisma/client.js";
+import type {
+	CartItemCreateInput,
+	CartItemUpdateInput,
 } from "../generated/prisma/models.js";
 
 interface CartItemService {

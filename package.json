@@ -2,6 +2,11 @@
   "name": "uni-semester6-practice-case4",
   "version": "0.1.0",
   "type": "module",
+  "scripts": {
+    "dev": "tsx watch --clear-screen=false ./src/index.ts",
+    "build": "tsc --build ./tsconfig.build.json",
+    "preview": "node ./dist/index.js"
+  },
   "dependencies": {
     "@prisma/adapter-better-sqlite3": "^7.2.0",
     "@prisma/client": "^7.2.0",

@@ -1,7 +1,7 @@
-import { type FastifyPluginAsync } from "fastify";
-import {
-	type CartItemCreateInput,
-	type CartItemUpdateInput,
+import type { FastifyPluginAsync } from "fastify";
+import type {
+	CartItemCreateInput,
+	CartItemUpdateInput,
 } from "../generated/prisma/models.js";
 import cartItemService from "./cartItem.service.js";
 import {

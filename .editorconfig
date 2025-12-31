@@ -8,7 +8,7 @@ indent_size = 2
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[{node_modules/**,generated/**,package-lock.json}]
+[{dist/**,node_modules/**,generated/**,package-lock.json}]
 charset = unset
 end_of_line = unset
 indent_style = unset

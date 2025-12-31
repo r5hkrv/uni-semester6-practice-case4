@@ -1,5 +1,5 @@
 import fp from "fastify-plugin";
-import { type Cart } from "../generated/prisma/client.js";
+import type { Cart } from "../generated/prisma/client.js";
 
 interface CartService {
 	create(): Promise<Cart>;

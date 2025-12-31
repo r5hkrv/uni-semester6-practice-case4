@@ -1,5 +1,5 @@
 import fp from "fastify-plugin";
-import { type Book, Prisma } from "../generated/prisma/client.js";
+import type { Book, Prisma } from "../generated/prisma/client.js";
 
 interface BookService {
 	getAll(): Promise<Book[]>;

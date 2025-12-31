@@ -1,6 +1,6 @@
-import { type FastifyInstance } from "fastify";
+import type { FastifyInstance } from "fastify";
+import type { Prisma } from "../generated/prisma/client.js";
 import bookService from "./book.service.js";
-import { type Prisma } from "../generated/prisma/client.js";
 import {
 	getAllBooksSchema,
 	getOneBookSchema,

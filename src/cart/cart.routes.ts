@@ -1,4 +1,4 @@
-import { type FastifyPluginAsync } from "fastify";
+import type { FastifyPluginAsync } from "fastify";
 import cartService from "./cart.service.js";
 import { createCartSchema, clearCartSchema } from "./cart.schema.js";
 import cartItemRoutes from "./cartItem.routes.js";
