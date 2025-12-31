@@ -25,15 +25,6 @@ const bookRoutes = (fastify: FastifyInstance) => {
 		method: "GET",
 		url: "/:id",
 		schema: getOneBookSchema,
-		attachValidation: true,
-		preHandler: (request, reply, done) => {
-			if (request.validationError) {
-				reply.status(400);
-
-				done(request.validationError);
-			}
-			done();
-		},
 		handler: async (request, reply) => {
 			const book = await fastify.bookService.getOne(request.params.id);
 
@@ -48,15 +39,6 @@ const bookRoutes = (fastify: FastifyInstance) => {
 		method: "POST",
 		url: "/",
 		schema: createBookSchema,
-		attachValidation: true,
-		preHandler: (request, reply, done) => {
-			if (request.validationError) {
-				reply.status(400);
-
-				done(request.validationError);
-			}
-			done();
-		},
 		handler: async (request, reply) => {
 			const book = await fastify.bookService.create(request.body);
 
@@ -68,15 +50,6 @@ const bookRoutes = (fastify: FastifyInstance) => {
 		method: "PUT",
 		url: "/:id",
 		schema: updateBookSchema,
-		attachValidation: true,
-		preHandler: (request, reply, done) => {
-			if (request.validationError) {
-				reply.status(400);
-
-				done(request.validationError);
-			}
-			done();
-		},
 		handler: async (request, reply) => {
 			const { params, body } = request;
 
@@ -94,15 +67,6 @@ const bookRoutes = (fastify: FastifyInstance) => {
 		method: "DELETE",
 		url: "/:id",
 		schema: deleteBookSchema,
-		attachValidation: true,
-		preHandler: (request, reply, done) => {
-			if (request.validationError) {
-				reply.status(400);
-
-				done(request.validationError);
-			}
-			done();
-		},
 		handler: async (request, reply) => {
 			try {
 				await fastify.bookService.delete(request.params.id);

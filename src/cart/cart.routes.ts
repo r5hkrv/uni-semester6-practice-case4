@@ -4,10 +4,6 @@ import { createCartSchema, clearCartSchema } from "./cart.schema.js";
 import cartItemRoutes from "./cartItem.routes.js";
 
 const cartRoutes: FastifyPluginAsync = async (fastify) => {
-	fastify.addHook("preHandler", (request, _, done) => {
-		done(request.validationError);
-	});
-
 	fastify.register(cartService);
 
 	fastify.route({
@@ -23,7 +19,6 @@ const cartRoutes: FastifyPluginAsync = async (fastify) => {
 		method: "PUT",
 		url: "/clear/:id",
 		schema: clearCartSchema,
-		attachValidation: true,
 		handler: async (request) => {
 			const { id } = request.params;
 

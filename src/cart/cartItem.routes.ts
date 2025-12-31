@@ -13,10 +13,6 @@ import {
 } from "./cartItem.schema.js";
 
 const cartItemRoutes: FastifyPluginAsync = async (fastify) => {
-	fastify.addHook("preHandler", (request, _, done) => {
-		done(request.validationError);
-	});
-
 	fastify.register(cartItemService);
 
 	fastify.route({
@@ -32,7 +28,6 @@ const cartItemRoutes: FastifyPluginAsync = async (fastify) => {
 		method: "GET",
 		url: "/:id",
 		schema: getOneCartItemSchema,
-		attachValidation: true,
 		handler: async (request, reply) => {
 			const { id } = request.params;
 			const item = await fastify.cartItemService.getOne(id);
@@ -49,7 +44,6 @@ const cartItemRoutes: FastifyPluginAsync = async (fastify) => {
 		method: "POST",
 		url: "/",
 		schema: createCartItemSchema,
-		attachValidation: true,
 		handler: async (request, reply) => {
 			const { body } = request;
 
@@ -67,7 +61,6 @@ const cartItemRoutes: FastifyPluginAsync = async (fastify) => {
 		method: "PUT",
 		url: "/:id",
 		schema: updateCartItemSchema,
-		attachValidation: true,
 		handler: async (request, reply) => {
 			const { id } = request.params;
 			const { body } = request;
@@ -86,7 +79,6 @@ const cartItemRoutes: FastifyPluginAsync = async (fastify) => {
 		method: "DELETE",
 		url: "/:id",
 		schema: deleteCartItemSchema,
-		attachValidation: true,
 		handler: async (request, reply) => {
 			const { id } = request.params;
 
