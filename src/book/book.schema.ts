@@ -6,7 +6,7 @@ const paramsSchema = {
 	required: ["id"],
 };
 
-const bookSchema = {
+export const bookSchema = {
 	type: "object",
 	properties: {
 		id: { type: "number" },
@@ -15,15 +15,6 @@ const bookSchema = {
 		author: { type: "string" },
 		year: { type: "number" },
 		category: { type: "string" },
-	},
-};
-
-export const getAllBooksSchema = {
-	response: {
-		200: {
-			type: "array",
-			items: bookSchema,
-		},
 	},
 };
 

@@ -3,9 +3,10 @@ import type {
 	BookCreateInput,
 	BookUpdateInput,
 } from "../generated/prisma/models.js";
+import bookSortService from "./bookSort.service.js";
+import { getAllBooksSchema, type BookQueryString } from "./bookSort.schema.js";
 import bookService from "./book.service.js";
 import {
-	getAllBooksSchema,
 	getOneBookSchema,
 	createBookSchema,
 	updateBookSchema,
@@ -13,13 +14,24 @@ import {
 } from "./book.schema.js";
 
 const bookRoutes: FastifyPluginAsync = async (fastify) => {
+	fastify.register(bookSortService);
 	fastify.register(bookService);
 
-	fastify.route({
+	fastify.route<{ Querystring: BookQueryString }>({
 		method: "GET",
 		url: "/",
 		schema: getAllBooksSchema,
-		handler: async () => {
+		handler: async (request) => {
+			const { sortBy, order } = request.query;
+
+			if (sortBy === "author") {
+				return await fastify.bookSortService.sortByAuthor(order);
+			} else if (sortBy === "year") {
+				return await fastify.bookSortService.sortByYear(order);
+			} else if (sortBy === "category") {
+				return await fastify.bookSortService.sortByCategory(order);
+			}
+
 			return await fastify.bookService.getAll();
 		},
 	});
